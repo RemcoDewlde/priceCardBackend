@@ -6,7 +6,7 @@ let PriceCard = require('../models/pricecard.js');
 let Template = require('../models/template.js');
 
 
-mongoose.connect('mongodb://localhost:27018/priceCardMaker', {useNewUrlParser: true});
+mongoose.connect('mongodb://localhost:27017/priceCardMaker', {useNewUrlParser: true});
 mongoose.set('useFindAndModify', false);
 // mongoose.set('useUnifiedTopology',true);
 
@@ -35,17 +35,18 @@ router.post('/api/pricecards', function (req, res, next) {
     );
     newPriceCard.save().then((err, result) => {
         if (err) throw err;
-        if (result) {
-            res.json(result)
-        }
-    })
+    });
+    res.json({succes: true, message: "Saved successfully"})
+
 });
 
 /*Delete a priceCard*/
 router.delete('/api/pricecards/:id', function (req, res, next) {
-    PriceCard.findByIdAndRemove(req.params.id).then((err, result) => {
+    PriceCard.findByIdAndDelete({_id: req.params.id}, function (err, result) {
         if (err) throw err;
-        console.log(result)
+        if (result) {
+            res.json({success: true, message: "Deleted successfully"})
+        }
     })
 });
 
@@ -73,15 +74,22 @@ router.post('/api/templates', function (req, res, next) {
     );
     newPriceCard.save().then((err, result) => {
         if (err) throw err;
-        if (result) {
-            res.json(result)
-        }
-    })
+    });
+    res.json({success: true, message: "Saved successfully"})
 });
 
 router.get('/api/templates/:id', function (req, res, next) {
     Template.findById(req.params.id, function (err, data) {
         res.json(data);
+    })
+});
+
+router.delete('/api/templates/:id', function (req, res, next) {
+    Template.findByIdAndDelete({_id: req.params.id}, function (err, result) {
+        if (err) throw err;
+        if (result) {
+            res.json({success: true, message: "Deleted successfully"})
+        }
     })
 });
 
