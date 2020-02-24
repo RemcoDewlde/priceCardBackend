@@ -36,7 +36,7 @@ router.post('/api/pricecards', function (req, res, next) {
     newPriceCard.save().then((err, result) => {
         if (err) throw err;
     });
-    res.json({succes: true, message: "Saved successfully"})
+    res.json({succes: true, message: "PriceCard saved successfully"})
 
 });
 
@@ -75,7 +75,7 @@ router.post('/api/templates', function (req, res, next) {
     newPriceCard.save().then((err, result) => {
         if (err) throw err;
     });
-    res.json({success: true, message: "Saved successfully"})
+    res.json({success: true, message: "Template saved successfully"})
 });
 
 router.get('/api/templates/:id', function (req, res, next) {
